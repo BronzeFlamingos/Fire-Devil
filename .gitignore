@@ -13,6 +13,7 @@ Thumbs.db
 /node_modules/**
 /client/components/**
 /app/bower_components/**
+/client/bower_components/**
 npm-debug.log
 
 # Sensitive info #
@@ -24,3 +25,4 @@ dist
 .sass-cache
 bower_components
 auth.js
+.env

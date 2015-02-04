@@ -6,10 +6,10 @@
  *
  * Main module of the application.
  */
-var fireDevil = angular.module('fireDevilApp', ['firebase'])
+var fireDevil = angular.module('fireDevilApp', ['firebase', 'fireDevilApp.services'])
   .controller('UserDataCtrl', ['$scope', '$firebase', function($scope, $firebase) {
     var originalUserStorage = {};
-    var ref = new Firebase('https://fire-devil.firebaseio.com/');
+    var ref = new Firebase('https://fingerfiesta.firebaseio.com/');
     var sync = $firebase(ref);
     var record = sync.$asObject();
     var userSwipes = {};
@@ -25,15 +25,19 @@ var fireDevil = angular.module('fireDevilApp', ['firebase'])
 
       // Use the difference in x and y values to calculate which direction
       // the user swiped in, and determine the feels as a result.
-      if (dy < 0 && dx > 0) {
-        userSwipes[userName]['mood']['excited'] += 1;
-      } else if (dy < 0 && dx < 0) {
-        userSwipes[userName]['mood']['happy'] += 1;
-      } else if (dy > 0 && dx < 0) {
-        userSwipes[userName]['mood']['sad'] += 1;
-      } else {
-        userSwipes[userName]['mood']['angry'] += 1;
-      }
+      // if (dy < 0 && dx > 0) {
+      //   userSwipes[userName]['mood']['excited'] += 1;
+      // } else if (dy < 0 && dx < 0) {
+      //   userSwipes[userName]['mood']['happy'] += 1;
+      // } else if (dy > 0 && dx < 0) {
+      //   userSwipes[userName]['mood']['sad'] += 1;
+      // } else {
+      //   userSwipes[userName]['mood']['angry'] += 1;
+      // }
+
+      console.log('dx:', dx);
+      console.log('dy:', dy);
+      
     };
 
     // Helper function for counting swipes.
@@ -70,14 +74,13 @@ var fireDevil = angular.module('fireDevilApp', ['firebase'])
         for (var key in record) {
           if (key[0] !== '$' && key !== 'forEach') {
             originalUserStorage[key] = record[key];
-            console.log('originalUserStorage:', originalUserStorage);
           }
         }
       })
       // Using promises to prepare the userSwipes object for population.
       .then(function() {
         for (var key in originalUserStorage) {
-          countStrokes(originalUserStorage[key]['swipeData'], key);
+          countStrokes(originalUserStorage[key], key);
         }
         console.log('userSwipes', userSwipes);
         $scope.userSwipes = userSwipes;

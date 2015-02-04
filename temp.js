@@ -1,4 +1,4 @@
-firebaseRef = new Firebase('https://fire-devil.firebaseio.com/');
+firebaseRef = new Firebase('https://fingerfiesta.firebaseio.com/');
 
 var orderedStorage = {};
 
