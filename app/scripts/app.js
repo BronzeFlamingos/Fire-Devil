@@ -74,14 +74,13 @@ var fireDevil = angular.module('fireDevilApp', ['firebase'])
         for (var key in record) {
           if (key[0] !== '$' && key !== 'forEach') {
             originalUserStorage[key] = record[key];
-            console.log('originalUserStorage:', originalUserStorage);
           }
         }
       })
       // Using promises to prepare the userSwipes object for population.
       .then(function() {
         for (var key in originalUserStorage) {
-          countStrokes(originalUserStorage[key]['swipeData'], key);
+          countStrokes(originalUserStorage[key], key);
         }
         console.log('userSwipes', userSwipes);
         $scope.userSwipes = userSwipes;
