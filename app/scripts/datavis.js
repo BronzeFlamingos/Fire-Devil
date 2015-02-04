@@ -1,4 +1,4 @@
-firebaseRef = new Firebase('https://fire-devil.firebaseio.com/');
+firebaseRef = new Firebase('https://fingerfiesta.firebaseio.com/');
 
 // Creating global objects to store user data
 var originalUserStorage = {};

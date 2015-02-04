@@ -9,7 +9,7 @@
 var fireDevil = angular.module('fireDevilApp', ['firebase'])
   .controller('UserDataCtrl', ['$scope', '$firebase', function($scope, $firebase) {
     var originalUserStorage = {};
-    var ref = new Firebase('https://fire-devil.firebaseio.com/');
+    var ref = new Firebase('https://fingerfiesta.firebaseio.com/');
     var sync = $firebase(ref);
     var record = sync.$asObject();
     var userSwipes = {};

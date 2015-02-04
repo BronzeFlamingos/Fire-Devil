@@ -16,7 +16,7 @@ angular.module('fireDevilApp')
       'AngularJS',
       'Karma'
     ];
-  	var ref = new Firebase("https://fire-devil.firebaseio.com/christine");
+  	var ref = new Firebase("https://fingerfiesta.firebaseio.com/christine");
 
     // create an AngularFire reference to the data
     var sync = $firebase(ref).$asObject();
