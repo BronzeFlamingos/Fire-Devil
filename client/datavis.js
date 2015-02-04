@@ -97,6 +97,7 @@ var countStrokes = function(obj) {
     // Use the difference in x and y values to calculate which direction
     // the user swiped in, and determine the feels as a result.
     if (dy < 0 && dx > 0) {
+      console.log("HIII")
       strokes[key]['excited'] += 1;
     } else if (dy < 0 && dx < 0) {
       strokes[key]['happy'] += 1;

@@ -25,15 +25,19 @@ var fireDevil = angular.module('fireDevilApp', ['firebase'])
 
       // Use the difference in x and y values to calculate which direction
       // the user swiped in, and determine the feels as a result.
-      if (dy < 0 && dx > 0) {
-        userSwipes[userName]['mood']['excited'] += 1;
-      } else if (dy < 0 && dx < 0) {
-        userSwipes[userName]['mood']['happy'] += 1;
-      } else if (dy > 0 && dx < 0) {
-        userSwipes[userName]['mood']['sad'] += 1;
-      } else {
-        userSwipes[userName]['mood']['angry'] += 1;
-      }
+      // if (dy < 0 && dx > 0) {
+      //   userSwipes[userName]['mood']['excited'] += 1;
+      // } else if (dy < 0 && dx < 0) {
+      //   userSwipes[userName]['mood']['happy'] += 1;
+      // } else if (dy > 0 && dx < 0) {
+      //   userSwipes[userName]['mood']['sad'] += 1;
+      // } else {
+      //   userSwipes[userName]['mood']['angry'] += 1;
+      // }
+
+      console.log('dx:', dx);
+      console.log('dy:', dy);
+      
     };
 
     // Helper function for counting swipes.

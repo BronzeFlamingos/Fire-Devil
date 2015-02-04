@@ -11,12 +11,15 @@ var startup = function() {
   //Put text on the canvas
   var c = document.getElementById("canvas");
   var ctx = c.getContext("2d");
-  ctx.font = "40px Arial";
-  ctx.fillText("Happy", 10, 50);
-  ctx.fillText("Angry", 450, 550);
-  ctx.fillText("Excited", 450, 50);
-  ctx.fillText("Sad", 10, 550);
-  ctx.fillText("Thumb", 250, 300);
+
+
+  ctx.rect(40,40, 100,100);
+  ctx.stroke();
+  // ctx.fillText("Happy", 10, 50);
+  // ctx.fillText("Angry", 450, 550);
+  // ctx.fillText("Excited", 450, 50);
+  // ctx.fillText("Sad", 10, 550);
+  // ctx.fillText("Thumb", 250, 300);
 }
 
 var ongoingTouches = [];
@@ -74,7 +77,26 @@ var handleMove = function(evt) {
       //store touches to array on movement (as integer values)
       touchesStoreX.push(Math.floor(ongoingTouches[idx].pageX - el.offsetLeft));
       touchesStoreY.push(Math.floor(ongoingTouches[idx].pageY - el.offsetTop));
+      // var beginX = touchesStoreX[0];
+      // var beginY = touchesStoreY[0];
+      // var endX = touchesStoreX[touchesStoreX.length-1];
+      // var endY = touchesStoreY[touchesStoreX.length-1];
 
+      // var slope = -(endX-beginX)/(endY-beginY);
+      // console.log('SLOPE', slope);
+
+      // var maxHeight = 900;
+      // var minHeight = 700;
+      // var mustBeLeftOf = 375;
+      // var mustBeRightOf = 625;
+
+
+
+      //check if line passes min length test
+
+      //check to see if line is within x and y coordinates
+
+      
       ctx.beginPath();
       //log("ctx.moveTo("+ongoingTouches[idx].pageX+", "+ongoingTouches[idx].pageY+");");
       ctx.moveTo(ongoingTouches[idx].pageX - el.offsetLeft, ongoingTouches[idx].pageY - el.offsetTop);
@@ -101,7 +123,7 @@ var handleEnd = function(evt) {
   for (var i=0; i < touches.length; i++) {
     var color = colorForTouch(touches[i]);
     var idx = ongoingTouchIndexById(touches[i].identifier);
-
+    console.log("idx", idx);
     if (idx >= 0) {
       ctx.lineWidth = 4;
       ctx.fillStyle = color;
@@ -114,6 +136,10 @@ var handleEnd = function(evt) {
 
       swipeCount+=1;
 
+
+
+
+
       //Print local storage
       ctx.lineTo(touches[i].pageX - el.offsetLeft , touches[i].pageY - el.offsetTop);
       ctx.fillRect(touches[i].pageX-4 - el.offsetLeft, touches[i].pageY-4 - el.offsetTop, 8, 8);  // and a square at the end
@@ -122,6 +148,41 @@ var handleEnd = function(evt) {
       //log("can't figure out which touch to end");
     }
   }
+
+  //VVVV   analyze line here   VVVV
+  var beginX = touchesStoreX[0];
+  var beginY = touchesStoreY[0];
+  var endX = touchesStoreX[touchesStoreX.length-1];
+  var endY = touchesStoreY[touchesStoreX.length-1];
+
+  var slope = -(endX-beginX)/(endY-beginY);
+  console.log('SLOPE', slope);
+
+  var maxHeight = 900;
+  var minHeight = 700;
+  var mustBeLeftOf = 375;
+  var mustBeRightOf = 625;
+
+
+  //check if line passes min length test
+
+  //check to see if line is within x and y coordinates
+  if(beginX<=mustBeLeftOf && endX>=mustBeRightOf){
+    for(var i = 0; i < touchesStoreY.length; i++){
+      // console.log(i, touchesStoreY[i])
+      if(touchesStoreY[i] < maxHeight && touchesStoreY[i] > minHeight){
+        console.log("YAY!!!");
+        //below clears the line 
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        //check if line hits square HERE
+        //ctx.clearRect(square.x,square.y,square.w,square.h);
+      }
+    }
+  }
+
+
+
+
   window.localStorage['swipeData'] = JSON.stringify(swipeData);
 }
 
@@ -185,6 +246,7 @@ var printLocalStorage = function() {
 
     //dx and dy are the difference between the end and start
     var dx = swipeX[lenX - 1] - swipeX[0];
+
     var dy = swipeY[lenY - 1] - swipeY[0];
     var slope = dy/dx;
 
