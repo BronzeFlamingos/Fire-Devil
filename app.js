@@ -2,6 +2,10 @@ var express = require('express');
 var app = require('./server/server.js');
 var googleCal = require('./googleCal.js');
 var passport = require('passport');
+// module.export = username = 
+
+// app.use('/',express.static(__dirname + '/client'));
+// app.use(express.static(__dirname + '/client'));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -20,6 +24,8 @@ app.get('/login',
               'https://www.googleapis.com/auth/userinfo.email',
               'https://www.googleapis.com/auth/calendar.readonly'] }),
   function(req, res){
+    // console.log(req);
+    console.log('inside passport function')
     // The request will be redirected to Google for authentication, so this
     // function will not be called.
   });
@@ -30,6 +36,7 @@ app.use('google-cal',express.static(__dirname + '/google-cal'));
 app.get('/data-view/callback',
   passport.authenticate('google', { failureRedirect: '/data-view' }),
   function(req, res) {
+    console.log(req.user._json.name)
     res.redirect('/swipez');
   });
   //DOES NOT WORK, issue #63 in waffle.io
@@ -39,7 +46,7 @@ app.get('/data-view/callback',
   });
 
 
-app.set('port', (process.env.PORT));
+app.set('port', (process.env.PORT || 8000));
 
 app.listen(app.get('port'), function() {
   console.log("Node app is running at localhost:" + app.get('port'));
