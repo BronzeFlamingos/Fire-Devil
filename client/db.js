@@ -1,5 +1,5 @@
 var swipesToDB = function(){
-  var firebaseRef = new Firebase('https://fire-devil.firebaseio.com/');
+  var firebaseRef = new Firebase('https://fingerfiesta.firebaseio.com/');
   // var swipesRef = firebaseRef.child('swipeData');
   var userRef = firebaseRef.child(window.localStorage.touchUser);
   console.log('username:', window.localStorage.touchUser);
