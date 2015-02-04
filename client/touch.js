@@ -13,10 +13,14 @@ var startup = function() {
   //Put text on the canvas
   var c = document.getElementById("canvas");
   var ctx = c.getContext("2d");
-
-
-  ctx.rect(40,40, 100,100);
+  ctx.rect(500, 800, 500,500);
   ctx.stroke();
+
+
+    var maxHeight = 900;
+  var minHeight = 700;
+  var mustBeLeftOf = 375;
+  var mustBeRightOf = 625;
   // ctx.fillText("Happy", 10, 50);
   // ctx.fillText("Angry", 450, 550);
   // ctx.fillText("Excited", 450, 50);
@@ -79,24 +83,6 @@ var handleMove = function(evt) {
       //store touches to array on movement (as integer values)
       touchesStoreX.push(Math.floor(ongoingTouches[idx].pageX - el.offsetLeft));
       touchesStoreY.push(Math.floor(ongoingTouches[idx].pageY - el.offsetTop));
-      // var beginX = touchesStoreX[0];
-      // var beginY = touchesStoreY[0];
-      // var endX = touchesStoreX[touchesStoreX.length-1];
-      // var endY = touchesStoreY[touchesStoreX.length-1];
-
-      // var slope = -(endX-beginX)/(endY-beginY);
-      // console.log('SLOPE', slope);
-
-      // var maxHeight = 900;
-      // var minHeight = 700;
-      // var mustBeLeftOf = 375;
-      // var mustBeRightOf = 625;
-
-
-
-      //check if line passes min length test
-
-      //check to see if line is within x and y coordinates
 
       
       ctx.beginPath();
@@ -138,10 +124,6 @@ var handleEnd = function(evt) {
 
       swipeCount+=1;
 
-
-
-
-
       //Print local storage
       ctx.lineTo(touches[i].pageX - el.offsetLeft , touches[i].pageY - el.offsetTop);
       ctx.fillRect(touches[i].pageX-4 - el.offsetLeft, touches[i].pageY-4 - el.offsetTop, 8, 8);  // and a square at the end
@@ -152,36 +134,14 @@ var handleEnd = function(evt) {
   }
 
   //VVVV   analyze line here   VVVV
-  var beginX = touchesStoreX[0];
-  var beginY = touchesStoreY[0];
-  var endX = touchesStoreX[touchesStoreX.length-1];
-  var endY = touchesStoreY[touchesStoreX.length-1];
-
-  var slope = -(endX-beginX)/(endY-beginY);
-  console.log('SLOPE', slope);
-
-  var maxHeight = 900;
-  var minHeight = 700;
-  var mustBeLeftOf = 375;
-  var mustBeRightOf = 625;
+  
 
 
   //check if line passes min length test
 
   //check to see if line is within x and y coordinates
-  myFunc();
-  if(beginX<=mustBeLeftOf && endX>=mustBeRightOf){
-    for(var i = 0; i < touchesStoreY.length; i++){
-      // console.log(i, touchesStoreY[i])
-      if(touchesStoreY[i] < maxHeight && touchesStoreY[i] > minHeight){
-        console.log("YAY!!!");
-        //below clears the line 
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        //check if line hits square HERE
-        //ctx.clearRect(square.x,square.y,square.w,square.h);
-      }
-    }
-  }
+  checkline(touchesStoreX, touchesStoreY, ctx)//ctx
+ 
 
 
 
