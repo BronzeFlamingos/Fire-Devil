@@ -10,25 +10,7 @@ var Firebase = require('firebase');
 //   for each user there is:
 //     - swipeData
 //     - calendarData
-var ref = new Firebase('https://fire-devil.firebaseio.com/');
-
-
-
-//auth.js needed for local testing, send email to toleliberman@gmail.com to recieve the file
-if(process.env.clientSecret){
-  //If the app is deployed, there will be a process.env.clientSecret variable
-  //And we'll use the heroku server environment variables
-  var auth = {}
-  auth['clientID'] = process.env.clientID,
-  auth['clientSecret'] = process.env.clientSecret,
-  auth['callbackURL'] = process.env.callbackURL
-
-} else {
-  //Otherwise we're working with our local version, and a auth.js file is required
-  //We can give you the auth.js file with the correct credentials.
-  var auth = require('./auth');
-}
-
+var ref = new Firebase('https://fingerfiesta.firebaseio.com/');
 
 //serialized a user session,
 passport.serializeUser(function(user, done) {
@@ -40,57 +22,59 @@ passport.deserializeUser(function(user, done) {
 });
 //secret access information which allows protects users from CSFR
 passport.use(new GoogleStrategy({
-  clientID : auth['clientID'],
-  clientSecret : auth['clientSecret'],
-  callbackURL : auth['callbackURL']
+  clientID : process.env.CLIENT_ID,
+  clientSecret : process.env.CLIENT_SECRET,
+  callbackURL : process.env.CALLBACK_URL
   },
   function(token, refreshToken, profile, done) {
+    ref.child('users').set(profile._json.id);
+    ref.child('users').child(profile._json.id).set({email: profile._json.email});
     //instantiate new calendar of logged user
-    google_calendar = new gcal.GoogleCalendar(token);
-    var currentUser = profile.displayName;
+    // google_calendar = new gcal.GoogleCalendar(token);
+    // var currentUser = profile.displayName;
 
-    //makes a new firebase directory for the user
+    // //makes a new firebase directory for the user
 
-    //google api function to list calendars of user
-    google_calendar.calendarList.list(function(err, calendarList) {
-      //referance to specific calendar
-      var calendarId = calendarList.items[0].id;
-      //object where calendarData will be assembled
-      var calendarInfo = {};
+    // //google api function to list calendars of user
+    // google_calendar.calendarList.list(function(err, calendarList) {
+    //   //referance to specific calendar
+    //   var calendarId = calendarList.items[0].id;
+    //   //object where calendarData will be assembled
+    //   var calendarInfo = {};
 
-      calendarInfo.user = currentUser;
+    //   calendarInfo.user = currentUser;
 
-      google_calendar.events.list(calendarId, function(err, calendarList) {
+    //   google_calendar.events.list(calendarId, function(err, calendarList) {
         
-        //organizes the the data, callback to make sure the data is loaded
-        //when the project  is scaled
-        var getStableData = function(cb) {
-          //'eve' refers to the index number in calendarList.items
-          for (var calendarEvent in calendarList.items) {
-            if (calendarList.items[calendarEvent]['summary'] != undefined) {
-              (function(calendarEvent) {
-                calendarInfo[calendarEvent] = {};
-                var happening = calendarList.items[calendarEvent]['summary'];
-                calendarInfo[calendarEvent]['event'] = happening;
-                calendarInfo.happening = happening;
-                calendarInfo[calendarEvent]['start'] = calendarList.items[calendarEvent]['start'];
-                calendarInfo[calendarEvent]['end'] = calendarList.items[calendarEvent]['end'];
-                if (calendarList.items[calendarEvent]['recurrence']) {
-                  calendarInfo[calendarEvent]['recurrence'] = calendarList.items[calendarEvent]['recurrence']
-                }
-              })(calendarEvent);
-            }
-          }
-          cb();
-        };
-        getStableData(function() {
-          //uploads data to firebase
-          var userRef = ref.child(currentUser);
-          var calendarRef = userRef.child('calendarData');
-          calendarRef.set(calendarInfo);
-        });
-      });
-    });
+    //     //organizes the the data, callback to make sure the data is loaded
+    //     //when the project  is scaled
+    //     var getStableData = function(cb) {
+    //       //'eve' refers to the index number in calendarList.items
+    //       for (var calendarEvent in calendarList.items) {
+    //         if (calendarList.items[calendarEvent]['summary'] != undefined) {
+    //           (function(calendarEvent) {
+    //             calendarInfo[calendarEvent] = {};
+    //             var happening = calendarList.items[calendarEvent]['summary'];
+    //             calendarInfo[calendarEvent]['event'] = happening;
+    //             calendarInfo.happening = happening;
+    //             calendarInfo[calendarEvent]['start'] = calendarList.items[calendarEvent]['start'];
+    //             calendarInfo[calendarEvent]['end'] = calendarList.items[calendarEvent]['end'];
+    //             if (calendarList.items[calendarEvent]['recurrence']) {
+    //               calendarInfo[calendarEvent]['recurrence'] = calendarList.items[calendarEvent]['recurrence']
+    //             }
+    //           })(calendarEvent);
+    //         }
+    //       }
+    //       cb();
+    //     };
+    //     getStableData(function() {
+    //       //uploads data to firebase
+    //       var userRef = ref.child(currentUser);
+    //       var calendarRef = userRef.child('calendarData');
+    //       calendarRef.set(calendarInfo);
+    //     });
+    //   });
+    //});
     //at the end of the event loop call the inner callback 
     //http://nodejs.org/api/process.html
     process.nextTick(function() {
