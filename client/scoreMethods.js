@@ -1,14 +1,17 @@
+var totalScore = 0;
 var scoreMethods = {
-    score: 0,
+    // score: 0,
     addScore: function() {
-      console.log('inside addScore');
-      this.score += 5;
-      return this.score;
+      totalScore += 5;
+      $('h1').text("Score: " + ""+totalScore+"")
     },
     subtractScore: function() {
-      this.score -= 5;
-      return this.score;
-    } 
+      $('h1').text("Score: " + ""+totalScore+"")
+      totalScore -= 5;
+    },
+    getScore: function() {
+      return totalScore;
+    }
 }
 
 

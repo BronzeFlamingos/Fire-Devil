@@ -92,6 +92,8 @@ var checkline = function(touchesStoreX, touchesStoreY, ctx){
           console.log("YAY!!!");
           //below clears the line 
           if(flag){
+            scoreMethods.addScore();
+            console.log('calling from touch', totalScore);
             ctx.clearRect(mustBeLeftOf,minHeight,mustBeLeftOf+50,minHeight+50);
             heldboxes.splice(j,1);
             flag = false;
