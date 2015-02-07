@@ -51,3 +51,19 @@ body{
   }
 }
 
+.newLevel {
+  position:   absolute; 
+  z-index:    10;
+  background-image: url('../img/nyan.gif');
+  background-size: 100%;
+  text-align: center; 
+  width:      900px;
+  height:     1200px;
+  margin: 0 auto;
+  top: 300px;
+  left: 50px;
+  right: 50px;
+  font-size: 30px;
+}
+
+

@@ -1,5 +1,6 @@
 var totalScore = 0;
-var minScore = 20;
+console.log('FROM SCORE METHODS', levels[level]['minScore'])
+var minScore = levels[level]['minScore'];
 var scoreMethods = {
     // score: 0,
     addScore: function() {

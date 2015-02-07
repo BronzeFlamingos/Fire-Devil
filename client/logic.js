@@ -1,13 +1,13 @@
 var timeUp = false;
 var level = 0;
 var levels = [
-{minScore: 20, color: "violet", timer: 5000, backgroundUrl: "img/swerve.gif", id: 1},
-{minscore: 40, color: "indigo", timer: 4500, backgroundUrl: "img/star.gif", id: 2},
-{minScore: 40, color: "blue", timer: 4000, backgroundUrl: "img/pixels.gif", id: 3},
-{minScore: 50, color: "#39FF14", timer: 3500, id:4},
-{minScore: 60, color: "yellow", timer: 3000, id:5},
-{minScore: 70, color: "orange", timer: 2500, id:6},
-{minScore: 80, color: "red", timer: 2000, id:7}
+{minScore: 20, color: "violet", timer: 5000, id: 1},
+{minScore: 40, color: "indigo", timer: 4500, backgroundUrl: "img/star.gif", id: 2},
+{minScore: 50, color: "blue", timer: 4000, backgroundUrl: "img/swerve.gif", id: 3},
+{minScore: 60, color: "#39FF14", timer: 3500, backgroundUrl: "img/tunnel.gif", id:4},
+{minScore: 70, color: "yellow", timer: 3000, backgroundUrl: "img/computers.gif", id:5},
+{minScore: 80, color: "orange", timer: 2500, backgroundUrl: "img/pizza.gif", id:6},
+{minScore: 90, color: "red", timer: 2000, backgroundUrl: "img/pixels.gif", id:7}
 ]
 var time = 30;
 var didYouWin = true;
@@ -21,7 +21,6 @@ var getTime = function(){
     //stop timer
   }
 }
-
 
 var timer = function () {
   setInterval(getTime, 1000);
@@ -40,10 +39,9 @@ var endLevel = function (didYouWin) {
   }else{
     // alert('You Lose! Back to Level 1');
     level = 0;
-    //startup();
+    // startup();
   }
 };
-
 
 var initLevel = function (ctx, level) {
   timer();
