@@ -33,6 +33,26 @@
         <div class="score" ng-app="scoreApp">
             <h1 ng-controller="scoreCtrl">Score: {{score}}/{{minScore}}</h1>
             <h2>Time: 30</h2>
+            <script>
+                var getTime = function(){
+                  $('h2').text("Time: " + time);
+                  time--;
+                  if(time === 0){
+                    location.reload();
+                    didYouWin = false;
+                    endLevel(didYouWin);
+                    //stop timer
+                  }
+                }
+                var timer = function () {
+                  setInterval(getTime, 1000);
+                };
+                //on new level reset timer
+                
+                // timer();
+                //start timer
+
+            </script>
         </div>
 
         <canvas id="canvas" width="960" height="1600" class="gameboard" >
