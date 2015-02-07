@@ -56,7 +56,12 @@ var initLevel = function (ctx, level) {
   setInterval(finalCountDown,33);
 };
 
-
+myAudio = new Audio('audio/techloop.ogg'); 
+myAudio.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+myAudio.play();
 
 
 
