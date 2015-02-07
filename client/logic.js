@@ -9,23 +9,23 @@ var levels = [
 {minScore: 70, color: "orange", timer: 2500, id:6},
 {minScore: 80, color: "red", timer: 2000, id:7}
 ]
-var time = 30;
+var time = 120;
 var didYouWin = true;
 
-var getTime = function(){
-  $('h2').text("Time: " + time);
-  time--;
-  if(time === 0){
-    didYouWin = false;
-    endLevel(didYouWin);
-    //stop timer
-  }
-}
+// var getTime = function(){
+//   $('h2').text("Time: " + time);
+//   time--;
+//   if(time === 0){
+//     didYouWin = false;
+//     endLevel(didYouWin);
+//     //stop timer
+//   }
+// }
 
 
-var timer = function () {
-  setInterval(getTime, 1000);
-};
+// var timer = function () {
+//   setInterval(getTime, 1000);
+// };
 
 var endLevel = function (didYouWin) {
   //render something depending on win state
